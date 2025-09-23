@@ -1,0 +1,45 @@
+# Exclude development files
+.git
+.gitignore
+README.md
+DEPLOYMENT.md
+ISSUES_AND_FIXES.md
+CODE_EXPLANATION.md
+plan.md
+system-prompt.md
+smoke_test.ps1
+failed.py
+headers.txt
+headers2.txt
+recent_requests.log
+__pycache__
+.venv
+*.pyc
+*.pyo
+*.pyd
+.Python
+env
+pip-log.txt
+pip-delete-this-directory.txt
+.tox
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+.git
+.mypy_cache
+.pytest_cache
+.hypothesis
+
+# Exclude deployment files for other platforms
+Procfile
+runtime.txt
+railway.toml
+Dockerfile
+.dockerignore
+
+# Exclude local environment files
+.env

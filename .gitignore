@@ -1,0 +1,15 @@
+.env
+plan.md
+.venv
+system-prompt.md
+resume.md
+headers.txt
+tools/smoke_test.ps1
+/tools/
+__pycache__/
+failed.py
+CODE_EXPLANATION.md
+ISSUES_AND_FIXES.md
+headers.txt
+headers2.txt
+/tools/*

@@ -1,0 +1,81 @@
+AMAN MOGAL
+amanmogal123@gmail.com
+
+Github
+
+LinkedIn
+
+Blog
+
+Certificate
+
+PROFILE
+Computer Science undergraduate with hands-on experience in AI/ML, agentic applications, and cloud
+computing. Proven ability to design, deploy, and scale intelligent software solutions. Passionate open-source
+contributor with a track record of improving system performance, automating workflows, and delivering
+measurable business outcomes.
+
+PROFESSIONAL EXPERIENCE
+AI-ML Internship
+Coding Pro
+Applied fundamental ML concepts and problem-solving techniques to address
+real-world challenges, resulting improvement in model accuracy.
+Developed an LLM-based code generation tool using fine-tuning techniques,
+enhancing code quality and reducing bugs.
+
+Jul 2024 – Sep 2024
+Remote, India
+
+Software Developer Intern (SDE)
+Esparse Matrix Solutions Pvt. Ltd
+Designed, implemented, and deployed full-stack web applications for
+educational institutions and SMEs.
+Improved website load times by 35% and frontend asset handling.
+
+Aug 2022 – Oct 2022
+pune, India
+
+
+Cloud Computing intern
+PINNACLELABS
+Automated CI/CD pipelines using GitHub Actions and ArgoCD, reducing
+deployment time by 80% and enabling daily releases.
+Configured Prometheus & Grafana for cloud monitoring, cutting issue detection
+time by 40%
+
+EDUCATION
+Bachelor of Engineering (B.E.), Computer Science
+Pes Modern college of engineering Pune
+
+Sep 2023 – Jul 2026
+pune, India
+
+DIPLOMA In Information Technology.
+Government Polytechnic Pune
+
+Sep 2020 – Jun 2023
+pune, India
+
+SKILLS
+Programming Languages : Python, C++, JavaScript
+AI/ML: LLM/GenAI, NLP, Agentic Apps, MLOps Principle's, LangChain Ecosystem, Hugging Face
+DevOps & Cloud: GCP, Docker, Kubernetes, CI/CD (GitHub Actions, ArgoCD), Grafana, Prometheus
+Software Development: Node, Databases, Networking, Algorithms & DS
+
+PROJECTS
+SafeEscape
+A lifesaving tool providing real-time alerts, coordinating rescue efforts, and guiding evacuations, featuring
+a built-in SOS.
+
+Devops toolchain
+Developed a containerized microservices toolchain for end-to-end CI/CD, code quality analysis, dependency
+scanning, and monitoring.
+
+
+Apple OCR System
+Developed and deployed a lean, production-ready optical character recognition (OCR) system for client
+Remac, processing 2,000 Apple device serial numbers daily on-prem. Led the full-stack development
+
+NOVA
+Developed an autonomous RAG agent that optimizes productivity by intelligently prioritizing and
+scheduling tasks directly in Notion.
