@@ -9,4 +9,5 @@ sys.path.insert(0, str(project_root))
 # Import the ASGI app from mcp_server.py
 from mcp_server import app
 
-# Vercel will automatically detect and use this ASGI app
+# Export the app for Vercel as 'application' (Vercel standard)
+application = app

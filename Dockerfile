@@ -25,12 +25,12 @@ COPY . .
 # Switch to non-root user
 USER app
 
-# Expose port 8000 for the application
-EXPOSE 8000
+# Expose port 3000 (Vercel standard for Docker deployments)
+EXPOSE 3000
 
 # Health check using Python (runtime check)
 HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
-    CMD python -c "import socket; s=socket.socket(); s.settimeout(5); r=s.connect_ex(('localhost', 8000)); s.close(); exit(0 if r==0 else 1)"
+    CMD python -c "import socket, os; port=int(os.getenv('PORT', 3000)); s=socket.socket(); s.settimeout(5); r=s.connect_ex(('localhost', port)); s.close(); exit(0 if r==0 else 1)"
 
-# Run the MCP server
-CMD ["python", "mcp_server.py"]
+# Run the MCP server with dynamic port
+CMD ["sh", "-c", "uvicorn mcp_server:app --host 0.0.0.0 --port ${PORT:-3000}"]
