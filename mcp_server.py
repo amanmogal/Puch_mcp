@@ -17,8 +17,6 @@ from starlette.responses import JSONResponse
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.exceptions import HTTPException
 from mcp.server.fastmcp import FastMCP
-from mcp.server.auth.provider import TokenVerifier, AccessToken
-from mcp.server.auth.settings import AuthSettings
 from mcp import ErrorData, McpError
 from mcp.types import INTERNAL_ERROR, INVALID_PARAMS, TextContent
 from pydantic import AnyUrl, AnyHttpUrl, Field, BaseModel
@@ -64,20 +62,6 @@ class RichToolDescription(BaseModel):
     description: str
     use_when: str
     side_effects: str | None
-
-class SimpleTokenVerifier(TokenVerifier):
-    """Simple token-based authentication verifier."""
-
-    def __init__(self, token: str):
-        self.token = token
-
-    async def verify_token(self, token: str):
-        """Verify the provided token against the expected token."""
-        print(f"Verifying token: {token}")
-        if token == self.token:
-            return AccessToken(token=token, client_id="dev", scopes=[])
-        print(f"Invalid token: {token} != {self.token}")
-        raise ValueError("Invalid token")
 
 class DebugMiddleware(BaseHTTPMiddleware):
     """
