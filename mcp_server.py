@@ -32,8 +32,13 @@ from datetime import datetime, timezone
 from typing import Annotated, Tuple
 
 # Server configuration - Environment variables with fallback defaults
-TOKEN = os.getenv("MCP_TOKEN")  
-MY_NUMBER = os.getenv("MY_NUMBER", "918669427514")  
+TOKEN = os.getenv("MCP_TOKEN")
+MY_NUMBER = os.getenv("MY_NUMBER", "918669427514")
+
+# Validate that TOKEN is set
+if TOKEN is None:
+    print("WARNING: MCP_TOKEN environment variable is not set!")
+    TOKEN = ""  # Set to empty string as fallback  
 
 # Metrics tracking for monitoring server health and usage
 SERVER_START_TS = time.time()
@@ -98,8 +103,14 @@ class DebugMiddleware(BaseHTTPMiddleware):
             return JSONResponse({"error": "Authentication required"}, status_code=401)
 
         token = auth_header[7:]  # Remove 'Bearer ' prefix
+        
+        # Check if TOKEN is configured
+        if not TOKEN:
+            print("ERROR: No MCP_TOKEN configured on server")
+            return JSONResponse({"error": "Server configuration error"}, status_code=500)
+        
         if token != TOKEN:
-            print(f"Invalid token: {token}")
+            print(f"Invalid token: received '{token}', expected '{TOKEN}'")
             return JSONResponse({"error": "invalid_token", "error_description": "Authentication required"}, status_code=401)
 
         print(f"Auth ok for token: {token}")
