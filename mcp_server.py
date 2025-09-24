@@ -38,7 +38,9 @@ MY_NUMBER = os.getenv("MY_NUMBER", "918669427514")
 # Validate that TOKEN is set
 if TOKEN is None:
     print("WARNING: MCP_TOKEN environment variable is not set!")
-    TOKEN = ""  # Set to empty string as fallback  
+    TOKEN = ""  # Set to empty string as fallback
+else:
+    print(f"MCP_TOKEN loaded successfully: {TOKEN[:8]}...")  # Log first 8 chars for debugging  
 
 # Metrics tracking for monitoring server health and usage
 SERVER_START_TS = time.time()
@@ -80,6 +82,7 @@ class DebugMiddleware(BaseHTTPMiddleware):
         """Process each HTTP request through the middleware."""
         print(f"Request: {request.method} {request.url}")
         print(f"Headers: {dict(request.headers)}")
+        print(f"TOKEN configured: {bool(TOKEN)} (value: {TOKEN[:8] if TOKEN else 'None'}...)")
 
         auth_header = request.headers.get('authorization', '')
 
@@ -99,10 +102,11 @@ class DebugMiddleware(BaseHTTPMiddleware):
 
         # Validate the authorization header
         if not auth_header.startswith('Bearer '):
-            print("No valid Authorization header")
+            print("No valid Authorization header found")
             return JSONResponse({"error": "Authentication required"}, status_code=401)
 
         token = auth_header[7:]  # Remove 'Bearer ' prefix
+        print(f"Extracted token: '{token[:8]}...'")
         
         # Check if TOKEN is configured
         if not TOKEN:
@@ -110,10 +114,10 @@ class DebugMiddleware(BaseHTTPMiddleware):
             return JSONResponse({"error": "Server configuration error"}, status_code=500)
         
         if token != TOKEN:
-            print(f"Invalid token: received '{token}', expected '{TOKEN}'")
+            print(f"Token mismatch: received '{token}', expected '{TOKEN}'")
             return JSONResponse({"error": "invalid_token", "error_description": "Authentication required"}, status_code=401)
 
-        print(f"Auth ok for token: {token}")
+        print(f"Auth successful for token: {token[:8]}...")
 
         response = await call_next(request)
         print(f"Response: {response.status_code}")
