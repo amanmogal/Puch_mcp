@@ -130,6 +130,11 @@ async def debug_endpoint(request):
         "url": str(request.url),
         "headers": dict(request.headers),
         "query_params": dict(request.query_params),
+        "env_check": {
+            "MCP_TOKEN_set": TOKEN is not None,
+            "MCP_TOKEN_length": len(TOKEN) if TOKEN else 0,
+            "MCP_TOKEN_prefix": TOKEN[:8] if TOKEN and len(TOKEN) > 8 else TOKEN,
+        }
     })
 
 class Fetch:
@@ -479,7 +484,17 @@ class AuthMiddleware:
         await self.app(scope, receive, send)
 
 # Initialize the ASGI application with authentication middleware
-app = AuthMiddleware(mcp.streamable_http_app())
+from starlette.applications import Starlette
+from starlette.routing import Route, Mount
+
+# Create a Starlette app with both MCP and debug routes
+starlette_app = Starlette(routes=[
+    Route("/debug", endpoint=debug_endpoint, methods=["GET", "POST"]),
+    Mount("/mcp", app=mcp.streamable_http_app()),
+])
+
+# Wrap with authentication middleware
+app = AuthMiddleware(starlette_app)
 
 # Deployment note: Clients connect to https://your-app.vercel.app/mcp
 
