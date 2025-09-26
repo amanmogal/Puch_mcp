@@ -1,3 +1,13 @@
+# In-memory log storage for diagnostics
+SERVER_LOGS = []
+def log_message(msg):
+    SERVER_LOGS.append(f"{datetime.now(timezone.utc).isoformat()} {msg}")
+    if len(SERVER_LOGS) > 100:
+        SERVER_LOGS.pop(0)
+
+# Endpoint to view recent server logs
+async def server_logs_endpoint(request):
+    return JSONResponse({"logs": SERVER_LOGS[-50:]})
 """
 MCP Server for Puch AI Hiring Platform
 
@@ -454,8 +464,8 @@ class AuthMiddleware:
                 await self.app(scope, receive, send)
                 return
             headers = dict((k.decode(), v.decode()) for k, v in scope['headers'])
-            print(f"Request: {scope['method']} {scope['path']}")
-            print(f"Headers: {headers}")
+            log_message(f"Request: {scope['method']} {scope['path']}")
+            log_message(f"Headers: {headers}")
 
             auth_header = headers.get('authorization', '')
             if not auth_header:
@@ -464,25 +474,25 @@ class AuthMiddleware:
                     if header_name in headers:
                         headers['authorization'] = f"Bearer {headers[header_name]}"
                         scope['headers'] = [(k.encode(), v.encode()) for k, v in headers.items()]
-                        print(f"Mapped {header_name} to Authorization")
+                        log_message(f"Mapped {header_name} to Authorization")
                         auth_header = headers['authorization']
                         break
 
             # Validate Bearer token
             if not auth_header.startswith('Bearer '):
-                print("No valid Authorization header")
+                log_message("No valid Authorization header")
                 await send({'type': 'http.response.start', 'status': 401, 'headers': [(b'content-type', b'application/json')]})
                 await send({'type': 'http.response.body', 'body': b'{"error": "Authentication required"}'})
                 return
 
             token = auth_header[7:]  # Extract token after 'Bearer '
             if token != TOKEN:
-                print(f"Invalid token: {token}")
+                log_message(f"Invalid token: {token}")
                 await send({'type': 'http.response.start', 'status': 401, 'headers': [(b'content-type', b'application/json')]})
                 await send({'type': 'http.response.body', 'body': b'{"error": "invalid_token"}'})
                 return
 
-            print(f"Auth ok for token: {token}")
+            log_message(f"Auth ok for token: {token}")
 
         # Forward request to the wrapped app
         await self.app(scope, receive, send)
@@ -491,9 +501,10 @@ class AuthMiddleware:
 from starlette.applications import Starlette
 from starlette.routing import Route, Mount
 
-# Create a Starlette app with both MCP and debug routes
+# Create a Starlette app with MCP, debug, and server-logs routes
 starlette_app = Starlette(routes=[
     Route("/debug", endpoint=debug_endpoint, methods=["GET", "POST"]),
+    Route("/server-logs", endpoint=server_logs_endpoint, methods=["GET"]),
     Mount("/mcp", app=mcp.streamable_http_app()),
 ])
 
