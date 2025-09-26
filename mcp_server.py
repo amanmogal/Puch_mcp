@@ -449,6 +449,10 @@ class AuthMiddleware:
     async def __call__(self, scope, receive, send):
         """Process ASGI requests and perform authentication."""
         if scope['type'] == 'http':
+            # Allow unauthenticated access to /debug
+            if scope.get('path') == '/debug':
+                await self.app(scope, receive, send)
+                return
             headers = dict((k.decode(), v.decode()) for k, v in scope['headers'])
             print(f"Request: {scope['method']} {scope['path']}")
             print(f"Headers: {headers}")
