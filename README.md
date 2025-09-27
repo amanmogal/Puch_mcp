@@ -4,9 +4,9 @@ A Model Context Protocol (MCP) server deployed on Vercel, providing various tool
 
 ## Endpoints
 
-- **MCP Streamable HTTP**: `https://puch-mcp-alky-2hvxtj7d2-amans-projects-528db5b2.vercel.app/mcp`
-- **Debug Endpoint** (no auth): `https://puch-mcp-alky-2hvxtj7d2-amans-projects-528db5b2.vercel.app/debug`
-- **Server Logs** (no auth): `https://puch-mcp-alky-2hvxtj7d2-amans-projects-528db5b2.vercel.app/server-logs`
+- **MCP Streamable HTTP**: `https://puch-mcp-alky.vercel.app/mcp`
+- **Debug Endpoint** (no auth): `https://puch-mcp-alky.vercel.app/debug`
+- **Server Logs** (no auth): `https://puch-mcp-alky.vercel.app/server-logs`
 
 ## Authentication
 
@@ -26,14 +26,14 @@ All requests to `/mcp` require Bearer token authentication:
 
 1. Start MCP Inspector: `npx @modelcontextprotocol/inspector`
 2. Open `http://localhost:6274` in your browser
-3. Set Endpoint: `https://puch-mcp-alky-2hvxtj7d2-amans-projects-528db5b2.vercel.app/mcp`
+3. Set Endpoint: `https://puch-mcp-alky.vercel.app/mcp`
 4. Set Token: `fa1eb43415fa`
 5. Select a tool and run tests
 
 ## Testing with Postman
 
 - Method: POST
-- URL: `https://puch-mcp-alky-2hvxtj7d2-amans-projects-528db5b2.vercel.app/mcp`
+- URL: `https://puch-mcp-alky.vercel.app/mcp`
 - Headers:
   - `Authorization: Bearer fa1eb43415fa`
   - `Content-Type: application/json`
